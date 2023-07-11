@@ -25,11 +25,12 @@ export default {
                             dest: screepsConfig.targetDir,
                         },
                     ],
+                    verbose: true,
+                    hook: 'closeBundle',
                 }),
             ],
         },
-
     },
     include: ['**/*.*'],
-    exclude: [],
+    exclude: ['**/tmp/**/*'],
 };
