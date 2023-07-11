@@ -8,32 +8,36 @@
  */
 
 
+import config from '../config/config.ts';
+
 const Producer = {
   run() {
   },
-  produceCreep(spawn: StructureSpawn, type: CreepType, group: number) {
-    if (spawn.store.getUsedCapacity(RESOURCE_ENERGY) >= type.cost) {
+  produceCreep(spawn: StructureSpawn, type: CreepType) {
+    if (spawn.room.energyAvailable >= type.cost) {
+      const num = spawn.memory.creepsCount[type.role]++;
+      const group = num % 2;
       spawn.spawnCreep(type.body, type.role + '-' + Date.now(), {
         memory: {
           role: type.role,
-          group: group,
+          num,
+          group,
+          spawn: spawn.name,
         },
+      });
+      spawn.room.visual.text(type.role + '-' + Date.now(), spawn.pos.x + 1, spawn.pos.y, {
+        align: 'left',
+        opacity: 0.8,
       });
       console.log('生产了一个' + type.role);
       console.log(spawn.memory.creepsCount[type.role]);
-      spawn.memory.creepsCount[type.role]++;
-      console.log(spawn.memory.creepsCount[type.role]);
     }
   },
-  
+
 
   init(spawn: StructureSpawn) {
     if (spawn.memory.initFlag) return;
-    spawn.memory.creepsCount = {
-      harvester: 0,
-      upgrader: 0,
-      builder: 0,
-    };
+    spawn.memory.creepsCount = config.SPAWN_INIT_CONFIG;
     spawn.memory.initFlag = true;
   },
 };

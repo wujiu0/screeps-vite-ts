@@ -2,11 +2,19 @@ interface CreepMemory {
   /**
    * 角色
    */
-  role: string,
+  role: roleType,
+  /**
+   * 序号
+   */
+  num: number,
   /**
    * 分组
    */
   group: number,
+  /**
+   * 所属spawn
+   */
+  spawn: string,
   /**
    * upgrade状态
    */
@@ -29,6 +37,9 @@ interface SpawnMemory {
   creepsCount: {
     harvester: number,
     upgrader: number,
-    builder: number
+    builder: number,
+    communicator: number,
+    pioneer: number,
+    temp: number,
   };
 }
