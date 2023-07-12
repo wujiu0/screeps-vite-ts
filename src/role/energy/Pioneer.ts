@@ -8,14 +8,19 @@ const Pioneer = {
   run(creep: Creep) {
     creep.say('pioneer');
     CreepUtil.checkLifeTime(creep);
-    const resources = creep.room.find(FIND_DROPPED_RESOURCES);
-    // 如果背包未满，且地图上有散落的资源，则去拾取
-    if (creep.store.getFreeCapacity() > 0 && resources.length > 0) {
-      this.pioneer(creep, resources[0]);
+    // 背包满了 -> 送
+    if (creep.store.getFreeCapacity() == 0) {
+      const targets = RoomUtil.findAllContainer(creep.room);
+      CreepUtil.transfer(creep, targets[0]);
     } else {
-      const targets = RoomUtil.findAllContainer(creep.room).filter(container => container.store.getFreeCapacity() > 0);
-      if (targets.length > 0) {
-        CreepUtil.transfer(creep, targets[0]);
+      // 背包没满
+      const resources = creep.room.find(FIND_DROPPED_RESOURCES);
+      // 有掉落的资源 -> 捡
+      if (resources.length > 0) {
+        this.pioneer(creep, resources[0]);
+      } else {
+        // 没有掉落的资源 -> 等
+        creep.moveTo(Game.flags['pioneer']);
       }
     }
   },
