@@ -1,13 +1,13 @@
 const config = {
   SPAWN_INIT_CONFIG: {
-    harvester: 0,
-    upgrader: 0,
-    builder: 0,
-    communicator: 0,
-    pioneer: 0,
-    temp: 0,
+    harvester: {count: 0, next: 0},
+    upgrader: {count: 0, next: 0},
+    builder: {count: 0, next: 0},
+    communicator: {count: 0, next: 0},
+    pioneer: {count: 0, next: 0},
+    temp: {count: 0, next: 0},
   },
-  SPAWN_MAX_CONFIG: {
+  SPAWN_MAX_CREEP_COUNT: {
     harvester: 3,
     upgrader: 1,
     builder: 10,

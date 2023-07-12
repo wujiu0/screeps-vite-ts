@@ -2,7 +2,7 @@ import Harvester from './role/Harvester';
 import Upgrader from './role/Upgrader.ts';
 import Producer from './role/Producer.ts';
 import Builder from './role/Builder.ts';
-import { BUILDER, COMMUNICATOR, HARVESTER, PIONEER, UPGRADER } from './types/CreepType.ts';
+import { BUILDER, COMMUNICATOR, HARVESTER, HARVESTER_PLUS, PIONEER, UPGRADER, UPGRADER_PLUS } from './types/CreepType.ts';
 import Pioneer from './role/Pioneer.ts';
 
 
@@ -14,13 +14,14 @@ const main = {
 
 
     // 设置spawn生产规则
-    if (spawn1.memory.creepsCount[HARVESTER.role] < 3) {
-      Producer.produceCreep(spawn1, HARVESTER);
-    } else if (spawn1.memory.creepsCount[UPGRADER.role] < 1) {
-      Producer.produceCreep(spawn1, UPGRADER);
-    } else if (spawn1.memory.creepsCount[PIONEER.role] < 1) {
+    const {harvester, upgrader, pioneer, builder} = spawn1.memory.creepsStatus;
+    if (harvester.count < 3) {
+      Producer.produceCreep(spawn1, HARVESTER_PLUS);
+    } else if (upgrader.count < 2) {
+      Producer.produceCreep(spawn1, UPGRADER_PLUS);
+    } else if (pioneer.count < 1) {
       Producer.produceCreep(spawn1, PIONEER);
-    } else if (spawn1.memory.creepsCount[BUILDER.role] < 6) {
+    } else if (builder.count < 6) {
       Producer.produceCreep(spawn1, BUILDER);
     }
     // 清理不存在的creep Memory
@@ -53,7 +54,6 @@ const main = {
           console.log('creep.role is not defined');
       }
     }
-  }
-  ,
+  },
 };
 export default main;

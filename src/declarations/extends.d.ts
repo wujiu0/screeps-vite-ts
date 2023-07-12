@@ -32,14 +32,14 @@ interface SpawnMemory {
    */
   initFlag: boolean;
   /**
-   * creep数量
+   * creeps状态
    */
-  creepsCount: {
-    harvester: number,
-    upgrader: number,
-    builder: number,
-    communicator: number,
-    pioneer: number,
-    temp: number,
+  creepsStatus: {
+    harvester: { count: number, next: number },
+    upgrader: { count: number, next: number },
+    builder: { count: number, next: number },
+    communicator: { count: number, next: number },
+    pioneer: { count: number, next: number },
+    temp: { count: number, next: number },
   };
 }

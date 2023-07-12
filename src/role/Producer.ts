@@ -15,13 +15,14 @@ const Producer = {
   },
   produceCreep(spawn: StructureSpawn, type: CreepType) {
     if (spawn.room.energyAvailable >= type.cost) {
-      const num = spawn.memory.creepsCount[type.role]++;
-      const group = num % 2;
-      spawn.spawnCreep(type.body, type.role + '-' + Date.now(), {
+      // 类型计数器++
+      spawn.memory.creepsStatus[type.role].count++;
+      const {next} = spawn.memory.creepsStatus[type.role];
+      spawn.spawnCreep(type.body, type.role + '-' + next, {
         memory: {
           role: type.role,
-          num,
-          group,
+          num: next,
+          group: next % 2,
           spawn: spawn.name,
         },
       });
@@ -29,15 +30,14 @@ const Producer = {
         align: 'left',
         opacity: 0.8,
       });
-      console.log('生产了一个' + type.role);
-      console.log(spawn.memory.creepsCount[type.role]);
+      console.log('生产了一个' + type.role, '当前数量：', spawn.memory.creepsStatus[type.role].count);
     }
   },
 
 
   init(spawn: StructureSpawn) {
     if (spawn.memory.initFlag) return;
-    spawn.memory.creepsCount = config.SPAWN_INIT_CONFIG;
+    spawn.memory.creepsStatus = config.SPAWN_INIT_CONFIG;
     spawn.memory.initFlag = true;
   },
 };

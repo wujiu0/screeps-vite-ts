@@ -8,8 +8,10 @@ export default {
     if (creep.ticksToLive && creep.ticksToLive === 20) {
       creep.say('🔄 renew');
       const spawn = Game.spawns[creep.memory.spawn];
-      if (--spawn.memory.creepsCount[creep.memory.role] < 0)
-        spawn.memory.creepsCount[creep.memory.role] = 0;
+      if (--spawn.memory.creepsStatus[creep.memory.role].count < 0)
+        spawn.memory.creepsStatus[creep.memory.role].count = 0;
+      // 传递重生者的序号
+      spawn.memory.creepsStatus[creep.memory.role].next = creep.memory.num;
       // 不再设置自杀，只是更改计数器，通知spawn开始制造新的creep，然后等待自然死亡
       // creep.suicide();
     }
