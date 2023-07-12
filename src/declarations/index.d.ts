@@ -5,4 +5,6 @@ interface CreepType {
 }
 
 
-type roleType = 'harvester' | 'upgrader' | 'builder' | 'communicator' | 'pioneer' | 'temp';
+type roleType = 'harvester' | 'transporter' | 'upgrader' | 'builder'
+  | 'communicator' | 'repairer'
+  | 'pioneer' | 'temp';

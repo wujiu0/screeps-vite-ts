@@ -19,11 +19,22 @@ interface CreepMemory {
    * upgrade状态
    */
   upgrading?: boolean,
-
   /**
    * build状态
    */
   building?: boolean;
+  /**
+   * transfer状态
+   */
+  transferring?: boolean;
+  /**
+   * repair状态
+   */
+  repairing?: boolean;
+  /**
+   * 临时creep
+   */
+  tmp?: boolean
 }
 
 interface SpawnMemory {
@@ -36,8 +47,10 @@ interface SpawnMemory {
    */
   creepsStatus: {
     harvester: { count: number, next: number },
+    transporter: { count: number, next: number },
     upgrader: { count: number, next: number },
     builder: { count: number, next: number },
+    repairer: { count: number, next: number },
     communicator: { count: number, next: number },
     pioneer: { count: number, next: number },
     temp: { count: number, next: number },

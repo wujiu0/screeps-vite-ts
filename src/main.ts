@@ -1,29 +1,15 @@
-import Harvester from './role/Harvester';
-import Upgrader from './role/Upgrader.ts';
+import Harvester from './role/energy/Harvester.ts';
+import Upgrader from './role/controller/Upgrader.ts';
 import Producer from './role/Producer.ts';
-import Builder from './role/Builder.ts';
-import { BUILDER, COMMUNICATOR, HARVESTER, HARVESTER_PLUS, PIONEER, UPGRADER, UPGRADER_PLUS } from './types/CreepType.ts';
-import Pioneer from './role/Pioneer.ts';
+import Builder from './role/construction/Builder.ts';
+import { BUILDER, COMMUNICATOR, HARVESTER, PIONEER, REPAIRER, TRANSPORTER, UPGRADER } from './types/CreepType.ts';
+import Pioneer from './role/energy/Pioneer.ts';
+import Transporter from './role/energy/Transporter.ts';
+import Repairer from './role/construction/Repairer.ts';
 
 
 const main = {
   loop() {
-    // 初始化spawn
-    const spawn1 = Game.spawns['Spawn1'];
-    Producer.init(spawn1);
-
-
-    // 设置spawn生产规则
-    const {harvester, upgrader, pioneer, builder} = spawn1.memory.creepsStatus;
-    if (harvester.count < 3) {
-      Producer.produceCreep(spawn1, HARVESTER_PLUS);
-    } else if (upgrader.count < 2) {
-      Producer.produceCreep(spawn1, UPGRADER_PLUS);
-    } else if (pioneer.count < 1) {
-      Producer.produceCreep(spawn1, PIONEER);
-    } else if (builder.count < 6) {
-      Producer.produceCreep(spawn1, BUILDER);
-    }
     // 清理不存在的creep Memory
     for (let name in Memory.creeps) {
       if (!Game.creeps[name]) {
@@ -31,6 +17,14 @@ const main = {
         console.log('Clearing non-existing creep memory:', name);
       }
     }
+
+    // 初始化spawn
+    const spawn1 = Game.spawns['Spawn1'];
+    Producer.init(spawn1);
+
+    // 设置spawn生产规则
+    Producer.config(spawn1);
+
     // 设置creep工作规则
     for (let name in Game.creeps) {
       const creep = Game.creeps[name];
@@ -41,17 +35,23 @@ const main = {
         case HARVESTER.role:
           Harvester.run(creep);
           break;
+        case TRANSPORTER.role:
+          Transporter.run(creep);
+          break;
         case UPGRADER.role:
           Upgrader.run(creep);
           break;
         case BUILDER.role:
           Builder.run(creep);
           break;
+        case REPAIRER.role:
+          Repairer.run(creep);
+          break;
         case PIONEER.role:
           Pioneer.run(creep);
           break;
         default:
-          console.log('creep.role is not defined');
+          console.log(` ${creep.name},${creep.memory.role} is not defined`);
       }
     }
   },
