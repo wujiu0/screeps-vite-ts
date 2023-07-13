@@ -7,17 +7,19 @@ import RoomUtil from '../../utils/RoomUtil.ts';
 const Upgrader = {
   run(creep: Creep) {
     CreepUtil.checkLifeTime(creep);
-    creep.say('U');
+    // creep.say('U');
+    // 解锁第三个container，围绕其进行升级
     const flag = RoomUtil.findAllContainer(creep.room).length >= 3;
-    if (flag) {
-      // 更改状态
+
+    // 更改状态
+    (function () {
       if (creep.memory.upgrading && creep.store[RESOURCE_ENERGY] == 0) {
         creep.memory.upgrading = false;
-        creep.say(creep.name.substring(creep.name.length - 1) + '🔄');
+        // creep.say(creep.name.substring(creep.name.length - 1) + '🔄');
       }
       if (!creep.memory.upgrading && creep.store.getFreeCapacity() == 0) {
         creep.memory.upgrading = true;
-        creep.say(creep.name.substring(creep.name.length - 1) + '⚡');
+        // creep.say(creep.name.substring(creep.name.length - 1) + '⚡');
       }
 
       // 根据状态开始work
@@ -30,35 +32,14 @@ const Upgrader = {
           creep.moveTo(creep.room.controller, {visualizePathStyle: {stroke: '#ffffff'}});
         }
       } else {
+        if (flag) {
+          creep.moveTo(RoomUtil.findAllContainer(creep.room)[2]);
+          CreepUtil.takeOut(creep, RoomUtil.findAllContainer(creep.room)[2]);
+          return;
+        }
         CreepUtil.takeOut(creep, RoomUtil.findAllContainer(creep.room)[1]);
       }
-    } else {
-      // 已经拥有了第三个container，开始围绕它进行升级
-      // 更改状态
-      (function () {
-        if (creep.memory.upgrading && creep.store[RESOURCE_ENERGY] == 0) {
-          creep.memory.upgrading = false;
-          creep.say(creep.name.substring(creep.name.length - 1) + '🔄');
-        }
-        if (!creep.memory.upgrading && creep.store.getFreeCapacity() == 0) {
-          creep.memory.upgrading = true;
-          creep.say(creep.name.substring(creep.name.length - 1) + '⚡');
-        }
-
-        // 根据状态开始work
-        if (creep.memory.upgrading) {
-          if (!creep.room.controller) {
-            console.error('no controller exist');
-            return;
-          }
-          if (creep.upgradeController(creep.room.controller) === ERR_NOT_IN_RANGE) {
-            creep.moveTo(creep.room.controller, {visualizePathStyle: {stroke: '#ffffff'}});
-          }
-        } else {
-          CreepUtil.takeOut(creep, RoomUtil.findAllContainer(creep.room)[1]);
-        }
-      })();
-    }
+    })();
   },
 };
 
