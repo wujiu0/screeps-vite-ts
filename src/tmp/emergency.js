@@ -24,13 +24,13 @@ Game.spawns.Spawn1.spawnCreep(
     });
 // 创建临时建造者
 Game.spawns.Spawn1.spawnCreep(
-    [WORK, WORK, WORK, CARRY, CARRY, MOVE, MOVE],
+    [WORK, WORK, WORK, CARRY, MOVE, MOVE],
     'builder' + Game.time,
     {
         memory: {
             role: 'builder',
             num: 999,
-            group: 0,
+            group: 2,
             tmp: true,
         },
     });
