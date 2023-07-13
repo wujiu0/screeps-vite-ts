@@ -19,20 +19,27 @@ export default {
       creep.say('✅transfer');
     }
 
+
+    const {group} = creep.memory;
+    const containers = RoomUtil.findAllContainer(creep.room);
     if (creep.memory.transferring) {
-      // 将能量输送给spawn或者extension,这个优先级是最高的
-      const targets = RoomUtil.findSurplusEnergyStructure(creep.room);
-      if (targets.length > 0) {
-        CreepUtil.transfer(creep, targets[0]);
-      } else {
-        // 如果没有需要输送的目标，则将能量存储到container3中
-        const containers = RoomUtil.findAllContainer(creep.room);
-        CreepUtil.transfer(creep, containers[3]);
+      if (group == 0) {
+        // 第【0】组的运输者，优先从container【0】中取出能量输送给spawn或者extension
+        const spawnAndExtensions = RoomUtil.findSurplusEnergyStructure(creep.room);
+        if (spawnAndExtensions.length > 0) {
+          CreepUtil.transfer(creep, spawnAndExtensions[0]);
+        } else {
+          // 如果spawn或者extension都已满，则将能量存储到container【1】中
+          const containers = RoomUtil.findAllContainer(creep.room);
+          CreepUtil.transfer(creep, containers[1]);
+        }
+      } else if (group == 1) {
+        // 第【1】组的运输者，只负责从container【1】中取出能量输送给upgrader使用的container【2】
+        CreepUtil.transfer(creep, containers[2]);
       }
+
     } else {
       // 从container中取出能量
-      const containers = RoomUtil.findAllContainer(creep.room);
-      const {group} = creep.memory;
       CreepUtil.takeOut(creep, containers[group]);
     }
   },
