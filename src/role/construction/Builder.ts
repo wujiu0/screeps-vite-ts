@@ -14,15 +14,16 @@ const Builder = {
       creep.say('🚧 build');
     }
 
+    const targets = creep.room.find(FIND_CONSTRUCTION_SITES);
+    if (!targets.length) {
+      creep.moveTo(Game.flags['Builder']);
+      return;
+    }
     if (creep.memory.building) {
-
-      const targets = creep.room.find(FIND_CONSTRUCTION_SITES);
-      if (targets.length) {
-        const targetIndex = 0;
-        // const targetIndex = targets.length -1;
-        if (creep.build(targets[targetIndex]) == ERR_NOT_IN_RANGE) {
-          creep.moveTo(targets[targetIndex], {visualizePathStyle: {stroke: '#ffffff'}});
-        }
+      const targetIndex = 0;
+      // const targetIndex = targets.length - 1;
+      if (creep.build(targets[targetIndex]) == ERR_NOT_IN_RANGE) {
+        creep.moveTo(targets[targetIndex], {visualizePathStyle: {stroke: '#ffffff'}});
       }
     } else {
       CreepUtil.takeOut(creep, RoomUtil.findAllContainer(creep.room)[creep.memory.group]);
