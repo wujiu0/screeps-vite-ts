@@ -1,15 +1,5 @@
-/*
- * Module code goes here. Use 'module.exports' to export things:
- * module.exports.thing = 'a thing';
- *
- * You can import it from another modules like this:
- * var mod = require('role.spawnsCreep');
- * mod.thing == 'a thing'; // true
- */
-
-
 import config from '../config/config.ts';
-import { BUILDER, HARVESTER_ULTRA, PIONEER, REPAIRER, TRANSPORTER, TRANSPORTER_PLUS, UPGRADER_PLUS } from '../types/CreepType.ts';
+import { BUILDER_PLUS, HARVESTER_ULTRA, PIONEER, REPAIRER, TRANSPORTER, TRANSPORTER_PRO, UPGRADER_ULTRA } from '../types/CreepType.ts';
 
 const Producer = {
   run() {
@@ -57,20 +47,20 @@ const Producer = {
       repairer,
       builder,
     } = spawn.memory.creepsStatus;
-    if (harvester.count < 2) {
+    if (harvester.count < config.SPAWN_MAX_CREEP_COUNT.harvester) {
       Producer.produceCreep(spawn, HARVESTER_ULTRA);
     } else if (transporter.count < 1) {
       Producer.produceCreep(spawn, TRANSPORTER);
-    } else if (transporter.count < 2) {
-      Producer.produceCreep(spawn, TRANSPORTER_PLUS);
-    } else if (upgrader.count < 6) {
-      Producer.produceCreep(spawn, UPGRADER_PLUS);
-    } else if (pioneer.count < 1) {
+    } else if (transporter.count < config.SPAWN_MAX_CREEP_COUNT.transporter) {
+      Producer.produceCreep(spawn, TRANSPORTER_PRO);
+    } else if (upgrader.count < config.SPAWN_MAX_CREEP_COUNT.upgrader) {
+      Producer.produceCreep(spawn, UPGRADER_ULTRA);
+    } else if (pioneer.count < config.SPAWN_MAX_CREEP_COUNT.pioneer) {
       Producer.produceCreep(spawn, PIONEER);
-    } else if (repairer.count < 1) {
+    } else if (repairer.count < config.SPAWN_MAX_CREEP_COUNT.repairer) {
       Producer.produceCreep(spawn, REPAIRER);
     } else if (builder.count < config.SPAWN_MAX_CREEP_COUNT.builder) {
-      Producer.produceCreep(spawn, BUILDER);
+      Producer.produceCreep(spawn, BUILDER_PLUS);
     }
   },
 };

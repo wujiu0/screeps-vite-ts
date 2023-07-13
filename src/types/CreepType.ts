@@ -54,6 +54,19 @@ const UPGRADER_PLUS: CreepType = {
   body: [WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE],
   cost: 550,
 };
+const UPGRADER_PRO: CreepType = {
+  role: 'upgrader',
+  body: [WORK, WORK, WORK, WORK, WORK, CARRY, MOVE],
+  cost: 600,
+};
+/**
+ * 超级升级者
+ */
+const UPGRADER_ULTRA: CreepType = {
+  role: 'upgrader',
+  body: [WORK, WORK, WORK, WORK, WORK, WORK, CARRY, MOVE, MOVE],
+  cost: 750,
+};
 /**
  * 建造者
  */
@@ -96,6 +109,14 @@ const TRANSPORTER_PLUS: CreepType = {
   body: [CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE],
   cost: 500,
 };
+/**
+ * 高级运输者
+ */
+const TRANSPORTER_PRO: CreepType = {
+  role: 'transporter',
+  body: [CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE],
+  cost: 650,
+};
 // 修理者
 const REPAIRER: CreepType = {
   role: 'repairer',
@@ -112,8 +133,8 @@ const TEMP: CreepType = {
 };
 export {
   HARVESTER_LOW, HARVESTER, HARVESTER_PLUS, HARVESTER_PRO, HARVESTER_ULTRA,
-  TRANSPORTER, TRANSPORTER_PLUS,
-  UPGRADER, UPGRADER_PLUS,
+  TRANSPORTER, TRANSPORTER_PLUS, TRANSPORTER_PRO,
+  UPGRADER, UPGRADER_PLUS, UPGRADER_PRO, UPGRADER_ULTRA,
   BUILDER, BUILDER_PLUS,
   REPAIRER,
   COMMUNICATOR, PIONEER, TEMP,
