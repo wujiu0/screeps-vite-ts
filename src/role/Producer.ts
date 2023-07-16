@@ -4,7 +4,7 @@ import { BUILDER_PLUS, HARVESTER_ULTRA, REPAIRER, TRANSPORTER, TRANSPORTER_PRO, 
 const Producer = {
   run() {
   },
-  produceCreep(spawn: StructureSpawn, type: CreepType) {
+  produceCreep(spawn: StructureSpawn, type: CreepType, room?: string) {
     console.log(`可用能量: ${spawn.room.energyAvailable},需要生产${type.role}，需要能量${type.cost}`);
     if (spawn.room.energyAvailable >= type.cost && !spawn.spawning) {
       // 类型计数器++
@@ -17,6 +17,7 @@ const Producer = {
         memory: {
           role: type.role,
           num: next,
+          room: room || spawn.room.name,
           group: next % 2,
           spawn: spawn.name,
         },

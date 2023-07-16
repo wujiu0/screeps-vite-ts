@@ -39,6 +39,12 @@ export default {
       }
 
     } else {
+      // 首先检查creep所处的房间是否正确，如果不正确，就移动到正确的房间
+      // (运输者搬运能量时需要回到主房间，所以只在非transferring时检查)
+      if (creep.memory.room && creep.room.name !== creep.memory.room) {
+        creep.moveTo(new RoomPosition(25, 25, creep.memory.room));
+        return;
+      }
       // 如果地图上有掉落的资源，优先捡起来
       const droppedResources = creep.room.find(FIND_DROPPED_RESOURCES);
       if (droppedResources.length > 0) {

@@ -18,7 +18,7 @@ interface CreepMemory {
   /**
    * 所处房间
    */
-  room?: string,
+  room: string,
   /**
    * upgrade状态
    */

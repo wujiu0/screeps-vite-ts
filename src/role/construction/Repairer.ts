@@ -5,6 +5,11 @@ const Repairer = {
   run(creep: Creep) {
     // 检测存活时间
     CreepUtil.checkLifeTime(creep);
+    // 首先检查creep所处的房间是否正确，如果不正确，就移动到正确的房间
+    if (creep.memory.room && creep.room.name !== creep.memory.room) {
+      creep.moveTo(new RoomPosition(25, 25, creep.memory.room));
+      return;
+    }
     creep.say('R');
     if (creep.memory.repairing && creep.store[RESOURCE_ENERGY] == 0) {
       creep.memory.repairing = false;
@@ -33,7 +38,8 @@ const Repairer = {
         creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}});
       }
     } else {
-      CreepUtil.takeOut(creep, containers[creep.memory.group]);
+      const ind = RoomUtil.findAllContainer(creep.room).length > 1 ? 1 : 0;
+      CreepUtil.takeOut(creep, RoomUtil.findAllContainer(creep.room)[ind]);
     }
   },
 

@@ -6,8 +6,12 @@ import RoomUtil from '../../utils/RoomUtil.ts';
  */
 const Harvester = {
   run(creep: Creep) {
-    // return;
     CreepUtil.checkLifeTime(creep);
+    // 首先检查creep所处的房间是否正确，如果不正确，就移动到正确的房间
+    if (creep.memory.room && creep.room.name !== creep.memory.room) {
+      creep.moveTo(new RoomPosition(25, 25, creep.memory.room));
+      return;
+    }
     if (!creep.store.getCapacity()) {
       // 身上没有空间，只需要走到container上持续打工
       // creep.say('╰(*°▽°*)╯');
