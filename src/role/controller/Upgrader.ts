@@ -37,7 +37,7 @@ const Upgrader = {
           CreepUtil.takeOut(creep, RoomUtil.findAllContainer(creep.room)[2]);
           return;
         }
-        CreepUtil.takeOut(creep, RoomUtil.findAllContainer(creep.room)[1]);
+        CreepUtil.takeOut(creep, RoomUtil.findAllContainer(creep.room)[0]);
       }
     })();
   },

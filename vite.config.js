@@ -4,7 +4,7 @@ import { screepsConfig } from './screeps.config.js';
 export default {
     build: {
         minify: false,
-        sourcemap: true,
+        sourcemap: false,
         lib: {
             entry: 'src/main.ts',
             name: 'main',

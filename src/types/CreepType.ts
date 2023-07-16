@@ -3,16 +3,16 @@
  */
 const HARVESTER_LOW: CreepType = {
   role: 'harvester',
-  body: [WORK, CARRY, MOVE],
-  cost: 200,
+  body: [WORK, CARRY, CARRY, MOVE, MOVE],
+  cost: 300,
 };
 /**
  * 采集者
  */
 const HARVESTER: CreepType = {
   role: 'harvester',
-  body: [WORK, WORK, CARRY, MOVE],
-  cost: 300,
+  body: [WORK, WORK, WORK, MOVE],
+  cost: 350,
 };
 /**
  * 中级采集者
@@ -43,8 +43,8 @@ const HARVESTER_ULTRA: CreepType = {
  */
 const UPGRADER: CreepType = {
   role: 'upgrader',
-  body: [WORK, CARRY, MOVE],
-  cost: 200,
+  body: [WORK, WORK, CARRY, MOVE],
+  cost: 300,
 };
 /**
  * 中级升级者
@@ -88,14 +88,6 @@ const COMMUNICATOR: CreepType = {
   body: [WORK, CARRY, MOVE, CARRY, MOVE],
   cost: 300,
 };
-/**
- * 拾荒者
- */
-const PIONEER: CreepType = {
-  role: 'pioneer',
-  body: [CARRY, CARRY, CARRY, MOVE, MOVE, MOVE],
-  cost: 300,
-};
 
 // 运输者
 const TRANSPORTER: CreepType = {
@@ -137,5 +129,5 @@ export {
   UPGRADER, UPGRADER_PLUS, UPGRADER_PRO, UPGRADER_ULTRA,
   BUILDER, BUILDER_PLUS,
   REPAIRER,
-  COMMUNICATOR, PIONEER, TEMP,
+  COMMUNICATOR, TEMP,
 };

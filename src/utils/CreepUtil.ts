@@ -1,3 +1,5 @@
+import infoUtil from './InfoUtil.ts';
+
 export default {
   /**
    * 检查creep是否需要续命
@@ -33,13 +35,44 @@ export default {
   },
 
   /**
+   * 采集能量
+   * @param creep
+   * @param source 指定的source
+   */
+  harvest(creep: Creep, source?: Source) {
+
+    if (!source) {
+      const sources = creep.room.find(FIND_SOURCES);
+      source = sources[creep.memory.group];
+    }
+    if (creep.harvest(source) === ERR_NOT_IN_RANGE) {
+      creep.moveTo(source, {visualizePathStyle: {stroke: '#ffaa00'}});
+    }
+  },
+  /**
    * 从建筑中获取能量
    * @param creep
    * @param src
    */
   takeOut(creep: Creep, src: Structure) {
-    if (creep.withdraw(src, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+    const res = creep.withdraw(src, RESOURCE_ENERGY);
+    if (res === 0) {
+    } else if (res == ERR_NOT_IN_RANGE) {
       creep.moveTo(src, {visualizePathStyle: {stroke: '#ffaa00'}});
+    } else {
+      console.log(`ERROR:${creep.name}:takeout:${res}:${infoUtil.errorMap(res)}`);
+    }
+    return res;
+  },
+
+  /**
+   * 捡取掉落能量
+   * @param creep
+   * @param source 掉落的能量源
+   */
+  pioneer(creep: Creep, source: Resource) {
+    if (creep.pickup(source) === ERR_NOT_IN_RANGE) {
+      creep.moveTo(source, {visualizePathStyle: {stroke: '#d000ff'}});
     }
   },
   /**

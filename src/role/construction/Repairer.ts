@@ -18,14 +18,19 @@ const Repairer = {
     const containers = RoomUtil.findAllContainer(creep.room).filter((container) => {
       return container.hits < container.hitsMax * 0.8;
     });
+    const roads = RoomUtil.findAllRoad(creep.room).filter((road) => {
+        return road.hits < road.hitsMax * 0.7;
+      },
+    );
+    const targets = (<Structure[]>containers).concat(roads);
     // 如果没有需要修理的container，就去flag处等待
-    if (containers.length === 0) {
+    if (targets.length === 0) {
       creep.moveTo(Game.flags['Repairer']);
       return;
     }
     if (creep.memory.repairing) {
-      if (creep.repair(containers[0]) == ERR_NOT_IN_RANGE) {
-        creep.moveTo(containers[0], {visualizePathStyle: {stroke: '#ffffff'}});
+      if (creep.repair(targets[0]) == ERR_NOT_IN_RANGE) {
+        creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}});
       }
     } else {
       CreepUtil.takeOut(creep, containers[creep.memory.group]);

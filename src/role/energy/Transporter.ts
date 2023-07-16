@@ -23,7 +23,7 @@ export default {
     const {group} = creep.memory;
     const containers = RoomUtil.findAllContainer(creep.room);
     if (creep.memory.transferring) {
-      if (group == 0) {
+      if (group == 0 || group == 1) {
         // 第【0】组的运输者，优先从container【0】中取出能量输送给spawn或者extension
         const spawnAndExtensions = RoomUtil.findSurplusEnergyStructure(creep.room);
         if (spawnAndExtensions.length > 0) {
@@ -39,20 +39,14 @@ export default {
       }
 
     } else {
-      // 从container中取出能量
-      CreepUtil.takeOut(creep, containers[group]);
-    }
-  },
-
-
-  /**
-   * 输送能量
-   * @param creep
-   * @param target
-   */
-  transfer(creep: Creep, target: StructureSpawn | StructureExtension) {
-    if (creep.transfer(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
-      creep.moveTo(target, {visualizePathStyle: {stroke: '#ffffff'}});
+      // 如果地图上有掉落的资源，优先捡起来
+      const droppedResources = creep.room.find(FIND_DROPPED_RESOURCES);
+      if (droppedResources.length > 0) {
+        CreepUtil.pioneer(creep, droppedResources[0]);
+      } else {
+        // 从container中取出能量
+        CreepUtil.takeOut(creep, containers[0]);
+      }
     }
   },
 

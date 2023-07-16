@@ -6,19 +6,25 @@ import RoomUtil from '../../utils/RoomUtil.ts';
  */
 const Harvester = {
   run(creep: Creep) {
+    // return;
     CreepUtil.checkLifeTime(creep);
     if (!creep.store.getCapacity()) {
       // 身上没有空间，只需要走到container上持续打工
-      creep.say('╰(*°▽°*)╯');
+      // creep.say('╰(*°▽°*)╯');
+      // const sources = creep.room.find(FIND_SOURCES);
+      // const containers = RoomUtil.findAllContainer(creep.room);
+      // const {group} = creep.memory;
+      // this.staticHarvest(creep, sources[group], containers[group].pos);
       const sources = creep.room.find(FIND_SOURCES);
-      const containers = RoomUtil.findAllContainer(creep.room);
-      const {group} = creep.memory;
-      this.staticHarvest(creep, sources[group], containers[group].pos);
+      // const {group} = creep.memory;
+      // this.harvest(creep, sources[group]);
+      this.harvest(creep, sources[0]);
     } else if (creep.store.getFreeCapacity() > 0) {
       // 身上有空间但是没有满，自由采集能量
       const sources = creep.room.find(FIND_SOURCES);
-      const {group} = creep.memory;
-      this.harvest(creep, sources[group]);
+      // const {group} = creep.memory;
+      // this.harvest(creep, sources[group]);
+      this.harvest(creep, sources[0]);
     } else {
       // 身上有空间并且满了，去建筑里面放能量
       console.log(creep.name, 'transfer');

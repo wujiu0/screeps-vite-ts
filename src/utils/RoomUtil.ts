@@ -39,4 +39,10 @@ export default {
     return <StructureContainer[]>room.find(FIND_STRUCTURES).filter((structure) => structure.structureType === STRUCTURE_CONTAINER);
   },
 
+  /**
+   * 寻找所有的road
+   */
+  findAllRoad(room: Room) {
+    return <StructureRoad[]>room.find(FIND_STRUCTURES).filter((structure) => structure.structureType === STRUCTURE_ROAD);
+  },
 };

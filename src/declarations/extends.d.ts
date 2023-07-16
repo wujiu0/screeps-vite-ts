@@ -16,6 +16,10 @@ interface CreepMemory {
    */
   spawn: string,
   /**
+   * 所处房间
+   */
+  room?: string,
+  /**
    * upgrade状态
    */
   upgrading?: boolean,
@@ -52,7 +56,6 @@ interface SpawnMemory {
     builder: { count: number, next: number },
     repairer: { count: number, next: number },
     communicator: { count: number, next: number },
-    pioneer: { count: number, next: number },
     temp: { count: number, next: number },
   };
 }

@@ -1,10 +1,11 @@
 import config from '../config/config.ts';
-import { BUILDER_PLUS, HARVESTER_ULTRA, PIONEER, REPAIRER, TRANSPORTER, TRANSPORTER_PRO, UPGRADER_ULTRA } from '../types/CreepType.ts';
+import { BUILDER_PLUS, HARVESTER_ULTRA, REPAIRER, TRANSPORTER, TRANSPORTER_PRO, UPGRADER_ULTRA } from '../types/CreepType.ts';
 
 const Producer = {
   run() {
   },
   produceCreep(spawn: StructureSpawn, type: CreepType) {
+    console.log(`可用能量: ${spawn.room.energyAvailable},需要生产${type.role}，需要能量${type.cost}`);
     if (spawn.room.energyAvailable >= type.cost && !spawn.spawning) {
       // 类型计数器++
       const lastId = spawn.memory.creepsStatus[type.role].count++;
@@ -43,7 +44,6 @@ const Producer = {
       harvester,
       transporter,
       upgrader,
-      pioneer,
       repairer,
       builder,
     } = spawn.memory.creepsStatus;
@@ -55,8 +55,6 @@ const Producer = {
       Producer.produceCreep(spawn, TRANSPORTER_PRO);
     } else if (upgrader.count < config.SPAWN_MAX_CREEP_COUNT.upgrader) {
       Producer.produceCreep(spawn, UPGRADER_ULTRA);
-    } else if (pioneer.count < config.SPAWN_MAX_CREEP_COUNT.pioneer) {
-      Producer.produceCreep(spawn, PIONEER);
     } else if (repairer.count < config.SPAWN_MAX_CREEP_COUNT.repairer) {
       Producer.produceCreep(spawn, REPAIRER);
     } else if (builder.count < config.SPAWN_MAX_CREEP_COUNT.builder) {
